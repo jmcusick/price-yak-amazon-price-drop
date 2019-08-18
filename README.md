@@ -9,7 +9,7 @@ Frugal is an application comprised of three parts:
 * A listener (aka watcher) that listens for price changes across all products from said database and outputs a message if any prices drop
 * A PostgreSQL database which serves as the medium between the two
 
-This application leverages my personal [Jenkins CI webserver](jenkins.jmorgancusick.com) for [pytest](https://docs.pytest.org/en/latest/) unit testing. It uses [docker-compose](https://docs.docker.com/compose/) for container orchestration and [pipenv](https://docs.pipenv.org/en/latest/) for python package management.
+This application leverages my personal [Jenkins CI webserver](http://jenkins.jmorgancusick.com) for [pytest](https://docs.pytest.org/en/latest/) unit testing. It uses [docker-compose](https://docs.docker.com/compose/) for container orchestration and [pipenv](https://docs.pipenv.org/en/latest/) for python package management.
 
 # How to run this application
 
