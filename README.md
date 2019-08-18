@@ -17,13 +17,13 @@ This application leverages my personal [Jenkins CI webserver](http://jenkins.jmo
 
 After installing docker and cloning the repo, use tmux or open up several terminal windows and cd into the project's root directory. You will need 5 windows in total.
 
-In terminal 1: Start the postgresql database
+* In terminal 1: Start the postgresql database
 
 ~~~
 docker-compose up postgresql
 ~~~
 
-In terminal 2: Start the price drop watcher
+* In terminal 2: Start the price drop watcher
 
 **This is where price notifications will be printed**
 
@@ -31,19 +31,19 @@ In terminal 2: Start the price drop watcher
 docker-compose up watcher
 ~~~
 
-In terminal 3: Start a price scraper for product [B07S9QS781](https://www.amazon.com/-/dp/B07S9QS781)
+* In terminal 3: Start a price scraper for product [B07S9QS781](https://www.amazon.com/-/dp/B07S9QS781)
 
 ~~~
 docker-compose run scraper bash -c "pipenv install && PYTHONPATH=. pipenv run python3 ./jmc/frugal/auction_house/__main__.py --asin B07S9QS781"
 ~~~
 
-In terminal 4: Start a second price scrape for product [B07F3GN2R1](https://www.amazon.com/-/dp/B07F3GN2R1)
+* In terminal 4: Start a second price scrape for product [B07F3GN2R1](https://www.amazon.com/-/dp/B07F3GN2R1)
 
 ~~~
 docker-compose run scraper bash -c "pipenv install && PYTHONPATH=. pipenv run python3 ./jmc/frugal/auction_house/__main__.py --asin B07F3GN2R1"
 ~~~
 
-In terminal 5: Connect to the PostgreSQL database
+* In terminal 5: Connect to the PostgreSQL database
 
 ~~~
 docker-compose exec postgresql psql my_postgres_db -U postgres
