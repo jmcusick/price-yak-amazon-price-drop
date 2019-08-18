@@ -5,8 +5,8 @@ A price watcher that notifies you of sudden price drops for an Amazon product (e
 
 Frugal is an application comprised of three parts:
 
-* A price scraper (aka "auction_house") that calls [Zincs Data API](https://docs.zincapi.com/#product-offers) and uploads _minimum price data_ (only the lowest offer) to a database for a single product
-* A listener (aka "watcher") that listens for price changes across all products from said database and outputs a message if any prices drop
+* A price scraper (aka auction_house) that calls [Zincs Data API](https://docs.zincapi.com/#product-offers) and uploads _minimum price data_ (only the lowest offer) to a database for a single product
+* A listener (aka watcher) that listens for price changes across all products from said database and outputs a message if any prices drop
 * A PostgreSQL database which serves as the medium between the two
 
 This application leverages my personal [Jenkins CI webserver](jenkins.jmorgancusick.com) for [pytest](https://docs.pytest.org/en/latest/) unit testing. It uses [docker-compose](https://docs.docker.com/compose/) for container orchestration and [pipenv](https://docs.pipenv.org/en/latest/) for python package management.
