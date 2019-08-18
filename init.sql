@@ -10,4 +10,3 @@ CREATE TABLE prices (
     access_timestamp int NOT NULL,
     PRIMARY KEY(asin, access_timestamp)
 );
-CREATE RULE price_update AS ON INSERT TO prices DO ALSO NOTIFY prices;

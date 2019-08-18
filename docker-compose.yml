@@ -20,3 +20,14 @@ services:
     depends_on:
       - postgresql
     network_mode: "service:postgresql"
+  scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    user: "root:sudo"
+    working_dir: /usr/src/app
+    volumes:
+      - ./:/usr/src/app/
+    depends_on:
+      - postgresql
+    network_mode: "service:postgresql"
