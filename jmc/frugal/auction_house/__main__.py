@@ -15,9 +15,11 @@ def parse_args():
     return parser.parse_args()
 
 def setup_log():
-    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+    logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 def main():
+    """Scrape prices from Amazon and upload them to a PostgreSQL database"""
+
     args = parse_args()
     setup_log()
 
@@ -25,23 +27,9 @@ def main():
 
         min_priced_offer = price_scraper.get_cheapest_offer(args.asin)
 
-        asin = min_priced_offer['asin']
-        offer_id = min_priced_offer['offer_id']
-        seller_id = min_priced_offer['seller']['id']
-        seller_name = min_priced_offer['seller']['name']
-        price = min_priced_offer['price']
-        currency = min_priced_offer['currency']
-        timestamp = min_priced_offer['timestamp']
-
-        print(offer_id)
-        print(seller_id)
-        print(seller_name)
-        print(price)
-        print(currency)
-
-        api.insert_offer(asin, price, timestamp)
+        api.insert_offer(min_priced_offer)
 
         time.sleep(args.wait)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
