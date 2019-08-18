@@ -15,7 +15,7 @@ This application leverages my personal [Jenkins CI webserver](http://jenkins.jmo
 
 **You must [install Docker](https://docs.docker.com/install/) in order to run this application**
 
-After installing docker and cloning the repo, use tmux or open up several terminal windows and cd into the project's root directory. You will need 5 windows in total.
+After installing docker and cloning the repo, use tmux or open up several terminal windows and cd into the project's root directory. You will need 6 windows in total.
 
 * In terminal 1: Start the postgresql database
 
@@ -59,3 +59,11 @@ INSERT INTO prices (asin, price, currency, access_timestamp) SELECT asin, price-
 ~~~
 
 Switch to the watcher in window 2 and you should see a price drop log. You can run the above sql command multiple times for multiple price drops. You could also alter the above SQL query and reaplce both instances of 'B07S9QS781' with 'B07F3GN2R1' to witness a price drop for the other product that window 4 is scraping.
+
+* In terminal 6: Tear everything down
+
+Once you are done testing, run the following command to tear down all containers:
+
+~~~
+docker-compose down
+~~~
