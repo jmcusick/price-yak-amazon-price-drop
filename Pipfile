@@ -9,6 +9,8 @@ pytest = "*"
 [packages]
 psycopg2-binary = "*"
 requests = "*"
+pgnotify = "*"
+six = "*"
 
 [requires]
 python_version = "3.7"

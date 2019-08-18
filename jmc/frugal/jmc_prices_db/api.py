@@ -18,7 +18,7 @@ def select_latest_offers(asin, n):
                                       password='mysecretpassword',
                                       host='localhost',
                                       port='5432',
-                                      database='postgres')) as connection:
+                                      database='my_postgres_db')) as connection:
 
             with closing(connection.cursor(cursor_factory=psycopg2.extras.DictCursor)) as cursor:
 
@@ -47,7 +47,7 @@ def insert_offer(offer):
                                       password='mysecretpassword',
                                       host='localhost',
                                       port='5432',
-                                      database='postgres')) as connection:
+                                      database='my_postgres_db')) as connection:
             with closing(connection.cursor()) as cursor:
 
                 postgresql_insert_query = 'INSERT INTO prices (asin, offer_id, seller_id, seller_name, price, currency, access_timestamp) VALUES (%s,%s,%s,%s,%s,%s,%s)'

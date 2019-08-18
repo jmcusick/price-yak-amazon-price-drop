@@ -23,7 +23,7 @@ def main():
                                   password='mysecretpassword',
                                   host='localhost',
                                   port='5432',
-                                  database='postgres')
+                                  database='my_postgres_db')
 
     channel = 'prices'
 
@@ -53,7 +53,7 @@ def main():
             curr_cents = int(curr_price % 100)
             prev_dollars = int(prev_price / 100)
             prev_cents = int(prev_price % 100)
-            print('Price of {} dropped from ${}.{} {} to ${}.{} {}!'.format(asin, prev_dollars, prev_cents, prev_currency, curr_dollars, curr_cents, curr_currency))
+            logging.info('Price of {} dropped from ${}.{} {} to ${}.{} {}!'.format(asin, prev_dollars, prev_cents, prev_currency, curr_dollars, curr_cents, curr_currency))
 
 
 if __name__ == '__main__':
