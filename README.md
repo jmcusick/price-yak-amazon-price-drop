@@ -62,7 +62,7 @@ Switch to the watcher in window 2 and you should see a price drop log. You can r
 
 * In terminal 6: Tear everything down
 
-Once you are done testing, run the following command to tear down all containers:
+Once you are done running, use the following command to tear down all containers:
 
 ~~~
 docker-compose down
