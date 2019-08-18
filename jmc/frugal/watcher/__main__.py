@@ -53,7 +53,7 @@ def main():
             curr_cents = int(curr_price % 100)
             prev_dollars = int(prev_price / 100)
             prev_cents = int(prev_price % 100)
-            logging.info('Price of {} dropped from ${}.{} {} to ${}.{} {}!'.format(asin, prev_dollars, prev_cents, prev_currency, curr_dollars, curr_cents, curr_currency))
+            logging.info('Price of {} dropped from ${}.{:02d} {} to ${}.{:02d} {}!'.format(asin, prev_dollars, prev_cents, prev_currency, curr_dollars, curr_cents, curr_currency))
 
 
 if __name__ == '__main__':
