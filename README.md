@@ -50,7 +50,7 @@ docker-compose exec postgresql psql my_postgres_db -U postgres
 SELECT * FROM prices ORDER BY access_timestamp DESC;
 ~~~
 
-At this point, you should see rows in the database and that offers are being uploaded by the scrapers in terminal windows 3 and 4. If a live price drop where to happen, you'd see that ouputted by the watcher in terminal 2. 
+At this point, you should that offers are being uploaded by the scrapers in terminal windows 3 and 4 and that there are rows in the database in terminal 5. If a live price drop where to happen, you'd see that ouputted by the watcher in terminal 2. 
 
 Let's artificially drop one of the product's prices and see that notification. In the psql prompt in terminal 5, run the following query, which takes the latest price of [B07S9QS781](https://www.amazon.com/-/dp/B07S9QS781), adds 1 second to the timestamp and removes 10 cents from the price:
 
