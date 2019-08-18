@@ -1,9 +1,16 @@
+import logging
 import psycopg2
 import psycopg2.extras
 
 from contextlib import closing
+from jmc.frugal.jmc_prices_db.data import Offer
 
 def select_latest_offers(asin, n):
+    """Return a dictionary of the latest n cheapest offers from the database
+
+    :return: a list of dictionaries keyed by the column name
+    """
+
     connection = None
     cursor = None
     try:
@@ -22,45 +29,51 @@ def select_latest_offers(asin, n):
 
                 offers = cursor.fetchall()
 
-                column_names = [desc[0] for desc in cursor.description]
-
                 return offers
 
     except (Exception, psycopg2.Error) as error :
-        print('Error while fetching data from PostgreSQL', error)
+        logging.error('Error while fetching data from PostgreSQL', error)
 
 
-def insert_offer(asin, price, timestamp):
+def insert_offer(offer):
+    """Insert an offer into the database and notify listeners
+
+    :param Offer offer: The offer to insert
+    """
 
     connection = None
     try:
-        connection = psycopg2.connect(user='postgres',
+        with closing(psycopg2.connect(user='postgres',
                                       password='mysecretpassword',
                                       host='localhost',
                                       port='5432',
-                                      database='postgres')
-        cursor = connection.cursor()
+                                      database='postgres')) as connection:
+            with closing(connection.cursor()) as cursor:
 
-        postgresql_insert_query = 'INSERT INTO prices (asin, price, access_timestamp) VALUES (%s,%s,%s)'
-        values = (asin, price, timestamp)
+                postgresql_insert_query = 'INSERT INTO prices (asin, offer_id, seller_id, seller_name, price, currency, access_timestamp) VALUES (%s,%s,%s,%s,%s,%s,%s)'
+                values = (
+                    offer.asin,
+                    offer.offer_id,
+                    offer.seller_id,
+                    offer.seller_name,
+                    offer.price,
+                    offer.currency,
+                    offer.access_timestamp
+                )
 
-        cursor.execute(postgresql_insert_query, values)
+                cursor.execute(postgresql_insert_query, values)
 
-        postgresql_notify_query = 'NOTIFY prices, %s'
-        payload = (asin,)
-        cursor.execute(postgresql_notify_query, payload)
+                postgresql_notify_query = 'NOTIFY prices, %s'
+                payload = (offer.asin,)
+                cursor.execute(postgresql_notify_query, payload)
 
-        connection.commit()
+                connection.commit()
 
-        count = cursor.rowcount
+                count = cursor.rowcount
+                logging.debug('Inserted {} rows'.format(count))
 
-        print('Inserted {} rows'.format(count))
+                if count:
+                    logging.info('Inserted offer for {} at ${}.{} {}'.format(offer.asin, int(offer.price/100), int(offer.price%100), offer.currency))
 
     except (Exception, psycopg2.Error) as error :
-        print ('Error while inserting data into PostgreSQL', error)
-    finally:
-        #closing database connection.
-        if connection:
-            cursor.close()
-            connection.close()
-            print('PostgreSQL connection is closed')
+        logging.error('Error while inserting data into PostgreSQL', error)

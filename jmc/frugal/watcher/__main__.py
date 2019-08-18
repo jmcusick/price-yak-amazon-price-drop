@@ -1,23 +1,22 @@
 import psycopg2
 import logging
 import sys
+import argparse
 
 from pgnotify import await_pg_notifications
 from jmc.frugal.jmc_prices_db import api
 
-# def parse_args():
-#     parser = argparse.ArgumentParser(description='Process some integers.')
-#     parser.add_argument('-a', '--asin', dest='asin', required=True,
-#                         help='the Amazon Standard Identification Number of the prodct to track')
-#     parser.add_argument('-w', '--wait', dest='wait', type=int, default=30, choices=[30, 60, 300],
-#                         help='the number of seconds to wait between price queries (default: 30s)')
-#     return parser.parse_args()
+def parse_args():
+    parser = argparse.ArgumentParser(description='Monitor price drops for all ASINs')
+    return parser.parse_args()
 
 def setup_log():
-    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+    logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 def main():
-#    args = parse_args()
+    """Listen to channel prices from PostgresSQL database and print any price drops"""
+
+    args = parse_args()
     setup_log()
 
     connection = psycopg2.connect(user='postgres',
@@ -26,12 +25,15 @@ def main():
                                   port='5432',
                                   database='postgres')
 
+    channel = 'prices'
+
+    logging.info('Listening for price drops on channel {}...'.format(channel))
+
     for notification in await_pg_notifications(
         connection,
-        ['prices']):
+        [channel]):
 
-        print(notification.channel)
-        print(notification.payload)
+        logging.debug('Received notification on channel {} with payload {}'.format(notification.channel, notification.payload))
 
         asin = notification.payload
 
@@ -42,15 +44,17 @@ def main():
             continue
 
         curr_price = last_two_offers[0]['price']
+        curr_currency = last_two_offers[0]['currency']
         prev_price = last_two_offers[1]['price']
+        prev_currency = last_two_offers[1]['currency']
 
         if curr_price < prev_price:
             curr_dollars = int(curr_price / 100)
             curr_cents = int(curr_price % 100)
             prev_dollars = int(prev_price / 100)
             prev_cents = int(prev_price % 100)
-            print('Price of {} from ${}.{} to ${}.{}'.format(asin, prev_dollars, prev_cents, curr_dollars, curr_cents))
+            print('Price of {} dropped from ${}.{} {} to ${}.{} {}!'.format(asin, prev_dollars, prev_cents, prev_currency, curr_dollars, curr_cents, curr_currency))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
