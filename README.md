@@ -15,7 +15,7 @@ This application leverages my personal [Jenkins CI webserver](http://jenkins.jmo
 
 **You must [install Docker](https://docs.docker.com/install/) in order to run this application**
 
-After cloning the repo, use tmux or open up several terminal windows and cd into the project's root directory. You will need 5 windows in total.
+After installing docker and cloning the repo, use tmux or open up several terminal windows and cd into the project's root directory. You will need 5 windows in total.
 
 In terminal 1: Start the postgresql database
 
