@@ -58,7 +58,7 @@ Let's artificially drop one of the product's prices and see that notification. I
 INSERT INTO prices (asin, price, currency, access_timestamp) SELECT asin, price-10, currency, access_timestamp+1 FROM prices WHERE asin='B07S9QS781' ORDER BY access_timestamp DESC LIMIT 1; NOTIFY prices, 'B07S9QS781';
 ~~~
 
-Switch to the watcher in window 2 and you should see a price drop log! You can run the above sql command multiple times for multiple price drops. You could also alter the above SQL query and reaplce both instances of 'B07S9QS781' with 'B07F3GN2R1' to witness a price drop for the other product that window 4 is scraping.
+Switch to the watcher in window 2 and you should see a price drop log! You can run the above sql command multiple times for multiple price drops. You could also alter the above SQL query and reaplce both instances of ```B07S9QS781``` with ```B07F3GN2R1``` to witness a price drop for the other product that window 4 is scraping.
 
 * In terminal 6: Tear everything down
 
