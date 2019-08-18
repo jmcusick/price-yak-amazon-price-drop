@@ -12,3 +12,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    user: "root:sudo"
+    working_dir: /usr/src/app
+    volumes:
+      - ./:/usr/src/app/
+    command: sh -c "pipenv --version && pipenv install && pwd && ls -al && PYTHONPATH=. pipenv run python3 ./jmc/frugal/watcher/__main__.py"
+    depends_on:
+      - postgresql
+    network_mode: "service:postgresql"

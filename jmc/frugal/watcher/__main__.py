@@ -23,7 +23,7 @@ def main():
                                   password='mysecretpassword',
                                   host='localhost',
                                   port='5432',
-                                  database='postgres')
+                                  database='my_postgres_db')
 
     channel = 'prices'
 
