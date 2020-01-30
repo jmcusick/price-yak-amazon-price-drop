@@ -4,6 +4,9 @@ pipeline {
             args '-u root:sudo'
         }
     }
+    triggers {
+        cron('@daily')
+    }
     stages {
         stage('debug') {
             steps {
