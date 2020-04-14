@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        docker { image 'jcusick12/price-yak-test:1.0' }
+    }
     triggers {
         cron('@daily')
     }
