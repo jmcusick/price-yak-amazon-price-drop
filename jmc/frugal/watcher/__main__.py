@@ -2,6 +2,7 @@ import psycopg2
 import logging
 import sys
 import argparse
+import os
 
 from pgnotify import await_pg_notifications
 from jmc.frugal.jmc_prices_db import api
@@ -21,8 +22,8 @@ def main():
 
     connection = psycopg2.connect(user='postgres',
                                   password='mysecretpassword',
-                                  host='localhost',
-                                  port='5432',
+                                  host=os.environ['JMC_PRICE_YAK_DB_SERVICE_HOST'],
+                                  port=os.environ['JMC_PRICE_YAK_DB_SERVICE_PORT'],
                                   database='my_postgres_db')
 
     channel = 'prices'

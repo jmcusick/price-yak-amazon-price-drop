@@ -1,6 +1,7 @@
 import logging
 import psycopg2
 import psycopg2.extras
+import os
 
 from contextlib import closing
 from jmc.frugal.jmc_prices_db.data import Offer
@@ -16,8 +17,8 @@ def select_latest_offers(asin, n):
     try:
         with closing(psycopg2.connect(user='postgres',
                                       password='mysecretpassword',
-                                      host='localhost',
-                                      port='5432',
+                                      host=os.environ['JMC_PRICE_YAK_DB_SERVICE_HOST'],
+                                      port=os.environ['JMC_PRICE_YAK_DB_SERVICE_PORT'],
                                       database='my_postgres_db')) as connection:
 
             with closing(connection.cursor(cursor_factory=psycopg2.extras.DictCursor)) as cursor:
@@ -45,8 +46,8 @@ def insert_offer(offer):
     try:
         with closing(psycopg2.connect(user='postgres',
                                       password='mysecretpassword',
-                                      host='localhost',
-                                      port='5432',
+                                      host=os.environ['JMC_PRICE_YAK_DB_SERVICE_HOST'],
+                                      port=os.environ['JMC_PRICE_YAK_DB_SERVICE_PORT'],
                                       database='my_postgres_db')) as connection:
             with closing(connection.cursor()) as cursor:
 
