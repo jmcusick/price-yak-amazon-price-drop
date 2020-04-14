@@ -47,7 +47,9 @@ kubectl logs $(kubectl get pod -l "app=jmc-price-yak-watcher" -o name | sed 's/p
 kubectl logs $(kubectl get pod -l "app=jmc-price-yak-scraper" -o name | sed 's/pods\///')
 ~~~
 
-Then, you may follow the below example for inserting artificial price drops.
+If you are using minikube, logs can also be seen on the dashboard.
+
+You may skip to the end of the docker-compose documentation for a command to insert artificial price drops into the PostgreSQL database.
 
 # How to run this application with Docker Compose
 
