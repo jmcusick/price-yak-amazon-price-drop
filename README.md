@@ -40,6 +40,14 @@ To access the database, use:
 kubectl exec -i -t $(kubectl get pod -l "app=jmc-price-yak-db" -o name | sed 's/pods\///') -- psql my_postgres_db -U postgres
 ~~~
 
+To get logs for the watcher and scraper respectively, use:
+
+~~~
+kubectl logs $(kubectl get pod -l "app=jmc-price-yak-watcher" -o name | sed 's/pods\///')
+kubectl logs $(kubectl get pod -l "app=jmc-price-yak-scraper" -o name | sed 's/pods\///')
+~~~
+
+Then, you may follow the below example for inserting artificial price drops.
 
 # How to run this application with Docker Compose
 
