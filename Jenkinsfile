@@ -1,9 +1,4 @@
 pipeline {
-    agent { 
-        dockerfile {
-            args '-u root:sudo'
-        }
-    }
     triggers {
         cron('@daily')
     }
