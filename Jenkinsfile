@@ -12,9 +12,7 @@ pipeline {
                     pwd
                     hostname
                     ls
-                    whoami
                     env
-                    exit 0
                 """
             }
         }
