@@ -14,6 +14,7 @@ pipeline {
                     ls
                     whoami
                     env
+                    exit 0
                 """
             }
         }
