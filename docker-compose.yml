@@ -1,33 +1,26 @@
 version: '3'
 services:
   postgresql:
-    image: "postgres"
+    image: "jcusick12/price-yak-db:1.0"
     ports:
       - "5432:5432"
-    environment:
-      - POSTGRES_PASSWORD=mysecretpassword
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
   watcher:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    user: "root:sudo"
-    working_dir: /usr/src/app
-    volumes:
-      - ./:/usr/src/app/
-    command: sh -c "pipenv install && PYTHONPATH=. pipenv run python3 ./jmc/frugal/watcher/__main__.py"
+    image: "jcusick12/price-yak-watcher:1.4"
     depends_on:
       - postgresql
     network_mode: "service:postgresql"
+    environment:
+      - JMC_PRICE_YAK_DB_SERVICE_HOST=127.0.0.1
+      - JMC_PRICE_YAK_DB_SERVICE_PORT=5432
   scraper:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    user: "root:sudo"
-    working_dir: /usr/src/app
-    volumes:
-      - ./:/usr/src/app/
+    image: "jcusick12/price-yak-scraper:1.1"
     depends_on:
       - postgresql
     network_mode: "service:postgresql"
+    environment:
+      - JMC_PRICE_YAK_DB_SERVICE_HOST=127.0.0.1
+      - JMC_PRICE_YAK_DB_SERVICE_PORT=5432
+    # a bit misleading, but this is actually appended to the entrypoint
+    command:
+      --asin B07S9QS781
+      

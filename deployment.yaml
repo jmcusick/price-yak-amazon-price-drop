@@ -1,0 +1,72 @@
+# equivalent of running 'kubectl expose deployment jmc-price-yak-db --type=ClusterIP
+# service goes first so that subsequent apps get the env variables
+apiVersion: v1
+kind: Service
+metadata:
+  name: jmc-price-yak-db
+  labels:
+    app: jmc-price-yak-db
+spec:
+  selector:
+    app: jmc-price-yak-db
+  ports:
+  - port: 5432
+    protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jmc-price-yak-db
+spec:
+  selector:
+    matchLabels:
+      app: jmc-price-yak-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jmc-price-yak-db
+    spec:
+      containers:
+      - name: price-yak-db
+        image: jcusick12/price-yak-db:1.0
+        ports:
+        - containerPort: 5432
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jmc-price-yak-watcher
+spec:
+  selector:
+    matchLabels:
+      app: jmc-price-yak-watcher
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jmc-price-yak-watcher
+    spec:
+      containers:
+      - name: price-yak-watcher
+        image: jcusick12/price-yak-watcher:1.4
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jmc-price-yak-scraper
+spec:
+  selector:
+    matchLabels:
+      app: jmc-price-yak-scraper
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jmc-price-yak-scraper
+    spec:
+      containers:
+      - name: price-yak-scraper
+        args: ["--asin", "B07S9QS781"]
+        image: jcusick12/price-yak-scraper:1.1
+
