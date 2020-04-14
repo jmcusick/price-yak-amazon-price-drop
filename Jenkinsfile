@@ -1,6 +1,9 @@
 pipeline {
     agent {
-        docker { image 'jcusick12/price-yak-test:1.0' }
+        docker { 
+            image 'jcusick12/price-yak-test:1.0'
+            args '-u root:sudo'
+        }
     }
     triggers {
         cron('@daily')
