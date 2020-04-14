@@ -11,7 +11,37 @@ Frugal is an application comprised of three parts:
 
 This application leverages my personal [Jenkins CI webserver](http://jenkins.jmorgancusick.com) for [pytest](https://docs.pytest.org/en/latest/) unit testing. It uses [docker-compose](https://docs.docker.com/compose/) for container orchestration and [pipenv](https://docs.pipenv.org/en/latest/) for python package management.
 
-# How to run this application
+# How to run this application with Kubernetes
+
+**You must have a operating kubernetes cluster (I recommend minikube) and have installed kubectl**
+
+After cloning the repo, cd into the project directory and apply thie deployment file
+
+~~~
+kubectl apply -f ./deployment.yaml
+~~~
+
+If you are using minikube, you can view the dashboard and confirm all deployments are running smoothly
+
+~~~
+minikube dashboard
+~~~
+
+Or you can use kubectl
+
+~~~
+kubectl get deployments
+kubectl get pods
+~~~
+
+To access the database, use:
+
+~~~
+kubectl exec -i -t $(kubectl get pod -l "app=jmc-price-yak-db" -o name | sed 's/pods\///') -- psql my_postgres_db -U postgres
+~~~
+
+
+# How to run this application with Docker Compose
 
 **You must [install Docker](https://docs.docker.com/install/) to run this application**
 
