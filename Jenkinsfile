@@ -1,8 +1,7 @@
 pipeline {
     agent {
         docker { 
-            image 'jcusick12/price-yak-test:1.0'
-            args '-u root:sudo'
+            image 'jcusick12/price-yak-test:1.1'
         }
     }
     triggers {
