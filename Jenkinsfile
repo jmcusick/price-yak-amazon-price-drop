@@ -1,7 +1,7 @@
 pipeline {
     agent {
         dockerfile { 
-            filename 'docker/watcher/Dockerfile'
+            filename 'docker/test/Dockerfile'
         }
     }
     triggers {
