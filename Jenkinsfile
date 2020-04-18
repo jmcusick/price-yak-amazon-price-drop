@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker { 
-            image 'jcusick12/price-yak-test:1.4'
+            image 'jcusick12/price-yak-test:1.5'
         }
     }
     triggers {
@@ -20,7 +20,7 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh 'pipenv run python3 -m pytest .'
+                sh 'python3 -m pytest .'
             }
         }
     }

@@ -15,3 +15,5 @@ COPY . .
 RUN pipenv install
 
 ENV PYTHONPATH "${PYTHONPATH}:."
+
+ENTRYPOINT ["pipenv", "run"]
