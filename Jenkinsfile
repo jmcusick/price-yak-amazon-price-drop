@@ -1,27 +1,17 @@
 pipeline {
     agent {
-        dockerfile { 
-            filename 'docker/test/Dockerfile'
-            args '-u jenkins:jenkins'
-        }
+        any
     }
     triggers {
-        cron('@daily')
+        cron("@daily")
     }
     stages {
-        stage('debug') {
+        stage("build") {
             steps {
-                sh """
-                    pwd
-                    hostname
-                    ls
-                    env
-                """
-            }
-        }
-        stage('build') {
-            steps {
-                sh 'pipenv run python3 -m pytest .'
+                def image = docker.build("docker/test/Dockerfile")
+                image.inside("-u jenkins:jenkins") {
+                    sh "pipenv run python3 -m pytest ."
+                }
             }
         }
     }
