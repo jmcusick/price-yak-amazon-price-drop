@@ -22,6 +22,7 @@ pipeline {
         }
         stage('build') {
             steps {
+                sh 'chown -R jenkins:jenkins .'
                 sh 'pipenv install'
                 sh 'PYTHONPATH=$PYTHONPATH:. pipenv run python3 -m pytest .'
             }
