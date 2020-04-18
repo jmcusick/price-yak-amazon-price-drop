@@ -10,7 +10,7 @@ WORKDIR /home/jenkins
 USER jenkins
 
 # Copy all files and folders from the local context directory into conatiner's working directory
-COPY . .
+COPY --chown=jenkins:jenkins . .
 
 RUN pipenv install --dev
 
