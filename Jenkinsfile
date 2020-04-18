@@ -2,6 +2,7 @@ pipeline {
     agent {
         docker { 
             image 'jcusick12/price-yak-test:1.6'
+            args '-u jenkins:jenkins'
         }
     }
     triggers {
