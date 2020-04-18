@@ -22,7 +22,7 @@ pipeline {
         // }
         stage("build") {
             steps {
-                dir("$HOME") {
+                dir("${env.HOME}") {
                     sh "pwd"
                     sh "env"
                     sh "pipenv install"
