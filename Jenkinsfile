@@ -20,7 +20,7 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh 'python3 -m pytest .'
+                sh 'pipenv run python3 -m pytest .'
             }
         }
     }
