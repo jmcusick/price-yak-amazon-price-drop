@@ -10,21 +10,20 @@ pipeline {
         cron("@daily")
     }
     stages {
-        // stage("debug") {
-        //     steps {
-        //         sh """
-        //             pwd
-        //             hostname
-        //             ls
-        //             env
-        //         """
-        //     }
-        // }
+        stage("debug") {
+            steps {
+                sh """
+                    pwd
+                    hostname
+                    ls
+                    env
+                """
+            }
+        }
         stage("build") {
             steps {
                 dir("$HOME") {
                     sh "pwd"
-                    sh "env"
                     sh "pipenv install"
                     sh "PYTHONPATH=$PYTHONPATH:. pipenv run python3 -m pytest ."
                 }
