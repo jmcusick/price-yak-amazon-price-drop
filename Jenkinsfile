@@ -2,6 +2,7 @@ pipeline {
     agent {
         dockerfile { 
             filename 'docker/test/Dockerfile'
+            args '-u jenkins:jenkins'
         }
     }
     triggers {
