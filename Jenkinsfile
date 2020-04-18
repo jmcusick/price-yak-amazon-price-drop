@@ -1,7 +1,7 @@
 pipeline {
     agent {
-        docker { 
-            image 'jcusick12/price-yak-test:1.6'
+        dockerfile { 
+            filename 'docker/test/Dockerfile'
             args '-u jenkins:jenkins'
         }
     }
