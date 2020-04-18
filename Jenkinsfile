@@ -3,6 +3,7 @@ pipeline {
         dockerfile { 
             filename "docker/test/Dockerfile"
             args "-u jenkins:jenkins"
+            additionalBuildArgs '--build-arg JENKINS_UID=$(id -u $USER) --build-arg JENKINS_GID=$(id -g $USER)'
             reuseNode true
         }
     }

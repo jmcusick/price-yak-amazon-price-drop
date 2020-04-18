@@ -2,11 +2,17 @@ FROM python:3
 
 RUN pip3 install pipenv
 
-# RUN groupadd -g 994 jenkins
+ARG JENKINS_UID
+RUN test -n "$JENKINS_UID"
 
-# RUN useradd -m -s /bin/bash -u 996 -g 994 jenkins
+ARG JENKINS_GID
+RUN test -n "$JENKINS_GID"
 
-RUN useradd -m -s /bin/bash jenkins
+RUN groupadd -g "$JENKINS_GID" jenkins
+
+RUN useradd -m -s /bin/bash -u "$JENKINS_UID" -g "$JENKINS_GID" jenkins
+
+# RUN useradd -m -s /bin/bash jenkins
 
 # won't be created by root, since already exists
 WORKDIR /home/jenkins
