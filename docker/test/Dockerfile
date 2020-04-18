@@ -16,4 +16,4 @@ RUN pipenv install
 
 ENV PYTHONPATH "${PYTHONPATH}:."
 
-ENTRYPOINT ["pipenv", "run"]
+CMD ["pipenv", "shell"]
