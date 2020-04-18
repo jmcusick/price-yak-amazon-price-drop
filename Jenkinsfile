@@ -22,7 +22,7 @@ pipeline {
         // }
         stage("build") {
             steps {
-                // sh '(cd $DOCKER_WORKDIR && env && ls -al && pipenv run python3 -m pytest .)'
+                // use single quote so that $HOME isn't exanded by groovy
                 sh '(cd $HOME && env && ls -al && pipenv run python3 -m pytest .)'
             }
         }
