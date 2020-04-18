@@ -22,7 +22,8 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh 'pipenv run python3 -m pytest .'
+                sh 'pipenv install'
+                sh 'PYTHONPATH=$PYTHONPATH:. pipenv run python3 -m pytest .'
             }
         }
     }
