@@ -1,27 +1,30 @@
 pipeline {
     agent {
         dockerfile { 
-            filename 'docker/test/Dockerfile'
-            args '-u jenkins:jenkins'
+            filename "docker/test/Dockerfile"
+            args "-u jenkins:jenkins"
+            reuseNode true
         }
     }
     triggers {
-        cron('@daily')
+        cron("@daily")
     }
     stages {
-        stage('debug') {
+        // stage("debug") {
+        //     steps {
+        //         sh """
+        //             pwd
+        //             hostname
+        //             ls
+        //             env
+        //         """
+        //     }
+        // }
+        stage("build") {
             steps {
-                sh """
-                    pwd
-                    hostname
-                    ls
-                    env
-                """
-            }
-        }
-        stage('build') {
-            steps {
-                sh 'pipenv run python3 -m pytest .'
+                dir("/home/jenkins") {
+                    sh "pipenv run python3 -m pytest ."
+                }
             }
         }
     }
