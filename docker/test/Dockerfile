@@ -16,4 +16,5 @@ RUN pipenv install
 
 ENV PYTHONPATH "${PYTHONPATH}:."
 
+# Will be replaced by cat in jenkins anyway
 CMD ["pipenv", "shell"]
