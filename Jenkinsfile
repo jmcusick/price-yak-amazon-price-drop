@@ -1,16 +1,16 @@
 pipeline {
     agent {
         dockerfile { 
-            filename "docker/test/Dockerfile"
-            args "-u jenkins:jenkins"
+            filename 'docker/test/Dockerfile'
+            args '-u jenkins:jenkins'
             reuseNode true
         }
     }
     triggers {
-        cron("@daily")
+        cron('@daily')
     }
     stages {
-        stage("debug") {
+        stage('debug') {
             steps {
                 sh """
                     pwd
@@ -20,13 +20,11 @@ pipeline {
                 """
             }
         }
-        stage("build") {
+        stage('build') {
             steps {
-                dir("$HOME") {
-                    sh "pwd"
-                    sh "pipenv install"
-                    sh "PYTHONPATH=$PYTHONPATH:. pipenv run python3 -m pytest ."
-                }
+                sh 'chown -R jenkins:jenkins .'
+                sh 'pipenv install'
+                sh 'PYTHONPATH=$PYTHONPATH:. pipenv run python3 -m pytest .'
             }
         }
     }
