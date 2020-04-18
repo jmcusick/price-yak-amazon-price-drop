@@ -22,7 +22,7 @@ pipeline {
         // }
         stage("build") {
             steps {
-                sh "cd $HOME && pipenv run python3 -m pytest ."
+                sh "cd $HOME && env && ls -al && pipenv run python3 -m pytest ."
             }
         }
     }
