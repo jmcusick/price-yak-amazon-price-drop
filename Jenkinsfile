@@ -22,7 +22,7 @@ pipeline {
         // }
         stage("build") {
             steps {
-                sh "(cd /home/jenkins && env && ls -al && pipenv run python3 -m pytest .)"
+                sh "(cd $DOCKER_WORKDIR && env && ls -al && pipenv run python3 -m pytest .)"
             }
         }
     }
