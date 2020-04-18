@@ -15,5 +15,3 @@ COPY . .
 RUN pipenv install
 
 ENV PYTHONPATH "${PYTHONPATH}:."
-
-CMD ["pipenv", "shell"]
