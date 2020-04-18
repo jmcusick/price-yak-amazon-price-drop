@@ -22,8 +22,10 @@ pipeline {
         // }
         stage("build") {
             steps {
-                // use single quote so that $HOME isn't exanded by groovy
-                sh '(cd $HOME && env && ls -al && pipenv run python3 -m pytest .)'
+                dir("/home/jenkins") {
+                    // use single quote so that $HOME isn't exanded by groovy
+                    sh '(cd $HOME && env && ls -al && pipenv run python3 -m pytest .)'
+                }
             }
         }
     }
