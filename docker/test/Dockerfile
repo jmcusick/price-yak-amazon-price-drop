@@ -4,7 +4,8 @@ RUN pip3 install pipenv
 
 RUN useradd -m -s /bin/bash jenkins
 
-WORKDIR /usr/src/app
+# won't be created by root, since already exists
+WORKDIR /home/jenkins
 
 USER jenkins
 
