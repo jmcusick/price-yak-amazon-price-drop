@@ -3,6 +3,7 @@ pipeline {
         dockerfile { 
             filename 'docker/test/Dockerfile'
             args '-u jenkins:jenkins'
+            reuseNode true
         }
     }
     triggers {
