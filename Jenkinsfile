@@ -1,28 +1,30 @@
 pipeline {
     agent {
-        docker { 
-            image 'jcusick12/price-yak-test:1.0'
-            args '-u root:sudo'
+        dockerfile { 
+            filename "docker/test/Dockerfile"
+            args "-u jenkins:jenkins"
+            additionalBuildArgs '--build-arg JENKINS_UID=$(id -u $USER) --build-arg JENKINS_GID=$(id -g $USER)'
+            reuseNode true
         }
     }
     triggers {
-        cron('@daily')
+        cron("@daily")
     }
     stages {
-        stage('debug') {
+        // stage("debug") {
+        //     steps {
+        //         sh """
+        //             pwd
+        //             hostname
+        //             ls
+        //             env
+        //         """
+        //     }
+        // }
+        stage("build") {
             steps {
-                sh """
-                    pwd
-                    hostname
-                    ls
-                    env
-                """
-            }
-        }
-        stage('build') {
-            steps {
-                sh 'pipenv install --dev'
-                sh 'pipenv run python3 -m pytest .'
+                // use single quote so that $HOME isn't exanded by groovy
+                sh '(cd $HOME && env && ls -al && pipenv run python3 -m pytest .)'
             }
         }
     }
